@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+@layer components {
   body {
     @apply font-pixel text-white bg-minecraft-sky;
     background-image:
@@ -30,5 +30,11 @@
 
   .pixelated-image {
     image-rendering: pixelated;
+  }
+  
+}
+@layer utilities {
+  .font-pixel {
+    font-family: "Press Start 2P", monospace;
   }
 }
