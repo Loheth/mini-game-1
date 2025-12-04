@@ -1,11 +1,18 @@
+import { useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useGameStore } from './store/gameStore';
 import { StartScreen } from './components/StartScreen';
 import { GameScreen } from './components/GameScreen';
 import { ResultScreen } from './components/ResultScreen';
+import { useAudio } from './hooks/useAudio';
 
 function App() {
   const gameState = useGameStore((state) => state.gameState);
+  const { playBgMusic } = useAudio();
+
+  useEffect(() => {
+    playBgMusic();
+  }, [playBgMusic]);
 
   return (
     <div className="min-h-screen">

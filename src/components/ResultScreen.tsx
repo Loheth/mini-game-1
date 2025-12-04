@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { submitScore } from '../lib/leaderboardApi';
 import { Leaderboard } from './Leaderboard';
+import { useAudio } from '../hooks/useAudio';
 
 export function ResultScreen() {
   const { score, resetGame } = useGameStore();
+  const { playClick } = useAudio();
   const [nickname, setNickname] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -17,6 +19,7 @@ export function ResultScreen() {
       return;
     }
 
+    playClick();
     setIsSubmitting(true);
     try {
       const success = await submitScore(nickname.trim(), score);
@@ -103,7 +106,10 @@ export function ResultScreen() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={resetGame}
+            onClick={() => {
+              playClick();
+              resetGame();
+            }}
             className="border-4 border-minecraft-border bg-minecraft-lapis px-8 py-3 text-xs text-white pixel-shadow"
           >
             PLAY AGAIN

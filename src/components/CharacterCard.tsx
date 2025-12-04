@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Character } from '../data/scenarios';
 import { useGameStore } from '../store/gameStore';
+import { useAudio } from '../hooks/useAudio';
 
 interface CharacterCardProps {
   character: Character;
@@ -9,6 +10,7 @@ interface CharacterCardProps {
 
 export function CharacterCard({ character, index }: CharacterCardProps) {
   const { selectCharacter, selectedCharacter, isAnswering } = useGameStore();
+  const { playClick, playCorrect, playIncorrect } = useAudio();
   const isSelected = selectedCharacter?.id === character.id;
   const isCorrect = character.isUnsafe;
   const showResult = isAnswering && selectedCharacter;
@@ -17,7 +19,15 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
 
   const handleClick = () => {
     if (!isAnswering) {
+      playClick();
       selectCharacter(character);
+      
+      // Play correct/incorrect sound based on selection
+      if (character.isUnsafe) {
+        playCorrect();
+      } else {
+        playIncorrect();
+      }
     }
   };
 

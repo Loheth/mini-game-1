@@ -1,8 +1,15 @@
 import { motion } from 'framer-motion';
 import { useGameStore } from '../store/gameStore';
+import { useAudio } from '../hooks/useAudio';
 
 export function StartScreen() {
   const startGame = useGameStore((state) => state.startGame);
+  const { playClick } = useAudio();
+
+  const handleStartClick = () => {
+    playClick();
+    startGame();
+  };
 
   return (
     <motion.div
@@ -38,7 +45,7 @@ export function StartScreen() {
           transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={startGame}
+          onClick={handleStartClick}
           className="mt-10 inline-block border-4 border-minecraft-border bg-minecraft-emerald px-10 py-4 text-sm text-minecraft-border transition-transform duration-200 pixel-shadow"
         >
           START ADVENTURE
