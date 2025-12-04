@@ -13,9 +13,7 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
   const isCorrect = character.isUnsafe;
   const showResult = isAnswering && selectedCharacter;
   const avatarSeed = encodeURIComponent(`${character.id}-${character.name}`);
-  const avatarUrl = character.isUnsafe
-    ? `https://api.dicebear.com/7.x/pixel-art-neutral/svg?seed=hacker-${avatarSeed}&backgroundColor=111827&size=160&eyes=angry&mouth=frown`
-    : `https://api.dicebear.com/7.x/pixel-art/svg?seed=ally-${avatarSeed}&backgroundColor=7fc14b&size=160`;
+  const avatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${avatarSeed}&backgroundColor=7fc14b&size=160`;
 
   const handleClick = () => {
     if (!isAnswering) {
@@ -61,11 +59,7 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
       `}
     >
       <div className="flex items-start gap-4">
-        <div
-          className={`flex h-20 w-20 items-center justify-center border-4 border-minecraft-border bg-minecraft-stone/60 p-1 pixel-shadow ${
-            character.isUnsafe ? 'bg-[#111827]' : 'bg-minecraft-grass/60'
-          }`}
-        >
+        <div className="flex h-20 w-20 items-center justify-center border-4 border-minecraft-border bg-minecraft-stone/60 p-1 pixel-shadow">
           <img
             src={avatarUrl}
             alt={`${character.name} avatar`}
