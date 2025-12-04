@@ -7,25 +7,30 @@ export default {
   theme: {
     extend: {
       colors: {
-        cyber: {
-          dark: '#0a0a0f',
-          darker: '#050508',
-          green: '#00ff88',
-          pink: '#ff0080',
-          purple: '#8b5cf6',
+        minecraft: {
+          sky: '#8fc8ff',
+          grass: '#3f8c28',
+          grassLight: '#63b135',
+          dirt: '#7a4e24',
+          dirtDark: '#4b2d15',
+          cobble: '#c0c5c9',
+          stone: '#6c6f72',
+          border: '#231409',
+          emerald: '#1fb862',
+          lapis: '#1d4ed8',
+          ember: '#d94830',
         },
       },
-      animation: {
-        'glow': 'glow 2s ease-in-out infinite alternate',
+      fontFamily: {
+        pixel: ['"Press Start 2P"', 'monospace'],
       },
-      keyframes: {
-        glow: {
-          '0%': { boxShadow: '0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 15px #00ff88' },
-          '100%': { boxShadow: '0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88, 0 0 40px #00ff88' },
-        },
+      boxShadow: {
+        blocky: '4px 4px 0 #231409',
+        blockyLg: '8px 8px 0 #231409',
       },
     },
   },
   plugins: [],
 }
+
 

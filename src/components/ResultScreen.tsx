@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { submitScore } from '../lib/leaderboardApi';
 import { Leaderboard } from './Leaderboard';
@@ -37,21 +37,21 @@ export function ResultScreen() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="max-w-4xl mx-auto"
+        className="mx-auto max-w-4xl border-4 border-minecraft-border bg-minecraft-dirt/80 p-6 md:p-10 pixel-shadow"
       >
-        <div className="text-center mb-8">
+        <div className="mb-10 text-center">
           <motion.h1
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-5xl md:text-7xl font-bold mb-4 text-glow-green"
+            className="text-block-shadow text-3xl md:text-5xl"
           >
-            GAME OVER
+            QUEST COMPLETE
           </motion.h1>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="text-4xl md:text-6xl font-bold text-cyber-pink mb-8"
+            className="mt-6 inline-block border-4 border-minecraft-border bg-minecraft-grass px-6 py-4 text-block-shadow text-minecraft-lapis pixel-shadow"
           >
             Final Score: {score}
           </motion.div>
@@ -62,39 +62,33 @@ export function ResultScreen() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-cyber-dark border-2 border-cyber-green rounded-lg p-6 md:p-8 mb-8"
+            className="border-4 border-minecraft-border bg-minecraft-dirtDark/80 p-6 pixel-shadow"
           >
-            <h2 className="text-2xl font-bold mb-4 text-cyber-green">Submit Your Score</h2>
-            <div className="flex flex-col md:flex-row gap-4">
+            <h2 className="text-sm text-minecraft-cobble">Add your name to the Hall of Fame</h2>
+            <div className="mt-4 flex flex-col gap-4 md:flex-row">
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                placeholder="Enter your nickname"
+                placeholder="Enter nickname"
                 maxLength={20}
-                className="flex-1 px-4 py-3 bg-cyber-darker border-2 border-cyber-purple/50 rounded-lg
-                         text-white placeholder-gray-500 focus:border-cyber-green focus:outline-none"
-                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                className="flex-1 border-4 border-minecraft-border bg-minecraft-dirt/70 px-4 py-3 text-xs text-white placeholder-minecraft-cobble focus:outline-none focus:border-minecraft-emerald"
+                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
               />
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-cyber-green text-cyber-darker font-bold rounded-lg
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+                className="border-4 border-minecraft-border bg-minecraft-emerald px-6 py-3 text-xs text-minecraft-border transition disabled:opacity-50 disabled:cursor-not-allowed pixel-shadow"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {isSubmitting ? 'Saving...' : 'Submit'}
               </motion.button>
             </div>
           </motion.div>
         ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center mb-8"
-          >
-            <p className="text-xl text-cyber-green mb-4">Score submitted successfully!</p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8 text-center">
+            <p className="text-sm text-minecraft-emerald">Score submitted successfully!</p>
           </motion.div>
         )}
 
@@ -104,16 +98,15 @@ export function ResultScreen() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-center"
+          className="mt-8 text-center"
         >
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={resetGame}
-            className="px-8 py-3 bg-cyber-pink text-white font-bold rounded-lg
-                     shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/70"
+            className="border-4 border-minecraft-border bg-minecraft-lapis px-8 py-3 text-xs text-white pixel-shadow"
           >
-            Play Again
+            PLAY AGAIN
           </motion.button>
         </motion.div>
       </motion.div>

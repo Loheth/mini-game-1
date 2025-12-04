@@ -9,41 +9,41 @@ export function StartScreen() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex flex-col items-center justify-center min-h-screen p-8"
+      className="flex min-h-screen items-center justify-center p-4 md:p-8"
     >
-      <motion.h1
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
-        className="text-6xl md:text-8xl font-bold mb-4 text-glow-green"
-      >
-        CATCH THE HACKER
-      </motion.h1>
+      <div className="w-full max-w-4xl border-4 border-minecraft-border bg-minecraft-dirt/80 p-6 md:p-10 text-center pixel-shadow">
+        <motion.h1
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
+          className="text-block-shadow text-3xl md:text-5xl leading-[1.4]"
+        >
+          CRAFT YOUR CYBER DEFENSE
+        </motion.h1>
 
-      <motion.p
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4, type: 'spring', stiffness: 100 }}
-        className="text-xl md:text-2xl text-gray-300 mb-8 text-center max-w-2xl"
-      >
-        Test your cybersecurity knowledge! Identify unsafe behaviors across 10 rounds.
-        <br />
-        <span className="text-cyber-green">Correct answers</span> earn points and build streaks.
-      </motion.p>
+        <motion.p
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, type: 'spring', stiffness: 100 }}
+          className="mt-6 text-sm md:text-base text-minecraft-cobble"
+        >
+          Spot the shady mob in each scenario before the realm is compromised.
+          <br />
+          <span className="text-minecraft-emerald">Earn emeralds</span> for every safe call and keep your streak alive.
+        </motion.p>
 
-      <motion.button
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={startGame}
-        className="px-12 py-4 bg-cyber-green text-cyber-darker font-bold text-xl rounded-lg
-                   shadow-lg shadow-cyber-green/50 hover:shadow-cyber-green/70
-                   transition-all duration-300"
-      >
-        START GAME
-      </motion.button>
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={startGame}
+          className="mt-10 inline-block border-4 border-minecraft-border bg-minecraft-emerald px-10 py-4 text-sm text-minecraft-border transition-transform duration-200 pixel-shadow"
+        >
+          START ADVENTURE
+        </motion.button>
+      </div>
     </motion.div>
   );
 }

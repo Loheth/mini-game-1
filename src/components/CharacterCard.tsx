@@ -12,6 +12,10 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
   const isSelected = selectedCharacter?.id === character.id;
   const isCorrect = character.isUnsafe;
   const showResult = isAnswering && selectedCharacter;
+  const avatarSeed = encodeURIComponent(`${character.id}-${character.name}`);
+  const avatarUrl = character.isUnsafe
+    ? `https://api.dicebear.com/7.x/pixel-art-neutral/svg?seed=hacker-${avatarSeed}&backgroundColor=111827&size=160&eyes=angry&mouth=frown`
+    : `https://api.dicebear.com/7.x/pixel-art/svg?seed=ally-${avatarSeed}&backgroundColor=7fc14b&size=160`;
 
   const handleClick = () => {
     if (!isAnswering) {
@@ -19,8 +23,15 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
     }
   };
 
+  const cardStateClasses = showResult && isSelected
+    ? isCorrect
+      ? 'border-minecraft-emerald bg-minecraft-grass/20'
+      : 'border-minecraft-ember bg-minecraft-dirt/40'
+    : 'border-minecraft-border bg-minecraft-dirtDark/70 hover:border-minecraft-grass hover:bg-minecraft-dirt/90';
+
   return (
-    <motion.div
+    <motion.button
+      type="button"
       initial={{ y: 50, opacity: 0 }}
       animate={{
         y: 0,
@@ -37,60 +48,46 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
           repeat: 0,
         } : undefined,
       }}
-      whileHover={!isAnswering ? { scale: 1.05 } : {}}
+      whileHover={!isAnswering ? { scale: 1.02, y: -4 } : {}}
       whileTap={!isAnswering ? { scale: 0.98 } : {}}
       onClick={handleClick}
+      disabled={isAnswering}
+      aria-pressed={isSelected}
       className={`
-        relative cursor-pointer rounded-lg border-2 p-6
-        transition-all duration-300
-        ${
-          showResult && isSelected
-            ? isCorrect
-              ? 'border-cyber-green bg-cyber-green/20 shadow-lg shadow-cyber-green/50'
-              : 'border-red-500 bg-red-500/20 shadow-lg shadow-red-500/50'
-            : 'border-cyber-purple/50 bg-cyber-dark/50 hover:border-cyber-green/70 hover:bg-cyber-dark/70'
-        }
-        ${isAnswering && !isSelected ? 'opacity-50' : ''}
+        relative flex h-full flex-col gap-4 border-4 p-4 text-left transition-all duration-300 pixel-shadow
+        ${cardStateClasses}
+        ${isAnswering && !isSelected ? 'opacity-60' : ''}
         ${isAnswering ? 'cursor-not-allowed' : 'cursor-pointer'}
       `}
     >
-      {showResult && isSelected && isCorrect && (
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 0.5 }}
-          className="absolute inset-0 rounded-lg bg-cyber-green/30"
-        />
-      )}
-      
-      {showResult && isSelected && !isCorrect && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="absolute inset-0 rounded-lg bg-red-500/30"
-        />
-      )}
-
-      <div className="relative z-10">
-        <h3 className="text-xl font-bold mb-2 text-cyber-green">{character.name}</h3>
-        <p className="text-sm text-gray-300 mb-3">{character.description}</p>
-        {showResult && isSelected && (
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs text-gray-400 mt-2 italic"
-          >
-            {character.behavior}
-          </motion.p>
-        )}
+      <div className="flex items-start gap-4">
+        <div
+          className={`flex h-20 w-20 items-center justify-center border-4 border-minecraft-border bg-minecraft-stone/60 p-1 pixel-shadow ${
+            character.isUnsafe ? 'bg-[#111827]' : 'bg-minecraft-grass/60'
+          }`}
+        >
+          <img
+            src={avatarUrl}
+            alt={`${character.name} avatar`}
+            className="h-full w-full object-contain pixelated-image"
+            loading="lazy"
+          />
+        </div>
+        <div className="flex-1">
+          <p className="text-[10px] text-minecraft-cobble">Mob #{index + 1}</p>
+          <h3 className="mt-1 text-sm text-block-shadow">{character.name}</h3>
+          <p className="mt-2 text-[10px] text-minecraft-cobble">{character.description}</p>
+        </div>
       </div>
+
+      <p className="text-[11px] leading-relaxed text-white">{character.behavior}</p>
 
       {showResult && isSelected && isCorrect && (
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 200 }}
-          className="absolute top-2 right-2 text-2xl"
+          className="absolute right-3 top-2 text-xl text-minecraft-emerald"
         >
           ✓
         </motion.div>
@@ -101,12 +98,12 @@ export function CharacterCard({ character, index }: CharacterCardProps) {
           initial={{ scale: 0, rotate: 180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 200 }}
-          className="absolute top-2 right-2 text-2xl text-red-500"
+          className="absolute right-3 top-2 text-xl text-minecraft-ember"
         >
           ✗
         </motion.div>
       )}
-    </motion.div>
+    </motion.button>
   );
 }
 

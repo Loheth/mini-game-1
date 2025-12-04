@@ -29,30 +29,29 @@ export function Leaderboard() {
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-cyber-dark border-2 border-cyber-purple/50 rounded-lg p-6 md:p-8 mb-8"
+      className="mb-8 border-4 border-minecraft-border bg-minecraft-dirtDark/90 p-6 md:p-8 pixel-shadow"
     >
-      <h2 className="text-2xl font-bold mb-6 text-cyber-green text-center">Leaderboard</h2>
+      <h2 className="text-center text-block-shadow text-minecraft-emerald">LEADERBOARD</h2>
       
       {isLoading ? (
-        <div className="text-center text-gray-400">Loading...</div>
+        <div className="mt-6 text-center text-minecraft-cobble">Loading...</div>
       ) : (
-        <div className="space-y-3">
+        <div className="mt-6 space-y-4">
           {scores.map((entry, index) => (
             <motion.div
               key={`${entry.nickname}-${entry.score}`}
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="flex justify-between items-center p-4 bg-cyber-darker/50 rounded-lg
-                       border border-cyber-purple/30 hover:border-cyber-green/50 transition-colors"
+              transition={{ delay: index * 0.08 }}
+              className="flex items-center justify-between border-4 border-minecraft-border bg-minecraft-dirt/80 px-4 py-3 text-xs text-white pixel-shadow"
             >
               <div className="flex items-center gap-4">
-                <span className="text-2xl font-bold text-cyber-pink w-8">
+                <span className="border-4 border-minecraft-border bg-minecraft-lapis px-3 py-2 text-block-shadow">
                   {index + 1}
                 </span>
-                <span className="text-xl font-bold text-white">{entry.nickname}</span>
+                <span>{entry.nickname}</span>
               </div>
-              <span className="text-xl font-bold text-cyber-green">{entry.score}</span>
+              <span className="text-minecraft-emerald text-block-shadow">{entry.score}</span>
             </motion.div>
           ))}
         </div>

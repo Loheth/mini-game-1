@@ -28,7 +28,7 @@ export function GameScreen() {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#00ff88', '#ff0080', '#8b5cf6'],
+        colors: ['#1fb862', '#1d4ed8', '#d94830'],
       });
     }
   }, [selectedCharacter]);
@@ -42,7 +42,7 @@ export function GameScreen() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-6xl mx-auto"
+        className="mx-auto max-w-6xl border-4 border-minecraft-border bg-minecraft-dirt/80 p-4 md:p-8 pixel-shadow"
       >
         {/* Header */}
         <div className="mb-8 text-center">
@@ -51,23 +51,21 @@ export function GameScreen() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 200 }}
-            className="inline-block mb-4"
+            className="inline-block border-4 border-minecraft-border bg-minecraft-grass px-4 py-2 text-xs md:text-sm pixel-shadow"
           >
-            <span className="text-2xl md:text-3xl font-bold text-cyber-green">
-              Round {currentRound} / 10
-            </span>
+            ROUND {currentRound} / 10
           </motion.div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-glow-pink">
+          <h2 className="mt-6 text-2xl md:text-4xl text-block-shadow">
             {currentScenario.theme}
           </h2>
-          <div className="flex justify-center gap-6 mt-4">
-            <div className="text-lg">
-              <span className="text-gray-400">Score: </span>
-              <span className="text-cyber-green font-bold">{score}</span>
+          <div className="mt-6 grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
+            <div className="border-4 border-minecraft-border bg-minecraft-dirtDark/70 px-4 py-3 pixel-shadow">
+              <span className="block text-minecraft-cobble">Score</span>
+              <span className="text-minecraft-emerald text-block-shadow">{score}</span>
             </div>
-            <div className="text-lg">
-              <span className="text-gray-400">Streak: </span>
-              <span className="text-cyber-pink font-bold">{streak}</span>
+            <div className="border-4 border-minecraft-border bg-minecraft-dirtDark/70 px-4 py-3 pixel-shadow">
+              <span className="block text-minecraft-cobble">Streak</span>
+              <span className="text-minecraft-lapis text-block-shadow">{streak}</span>
             </div>
           </div>
         </div>
@@ -77,7 +75,7 @@ export function GameScreen() {
           key={`round-${currentRound}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+          className="grid grid-cols-1 gap-4 md:grid-cols-3"
         >
           {shuffledCharacters.map((character, index) => (
             <CharacterCard key={character.id} character={character} index={index} />
@@ -91,20 +89,21 @@ export function GameScreen() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
               onClick={(e) => e.stopPropagation()}
             >
               <motion.div
                 initial={{ scale: 0.8, y: 50 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.8, y: 50 }}
-                className="bg-cyber-dark border-2 border-red-500 rounded-lg p-6 md:p-8 max-w-2xl"
+                className="max-w-2xl border-4 border-minecraft-border bg-minecraft-dirt/90 p-6 md:p-8 pixel-shadow"
               >
-                <h3 className="text-2xl font-bold text-red-500 mb-4">Incorrect!</h3>
-                <p className="text-gray-300 mb-4">
-                  The correct answer was <span className="text-cyber-green font-bold">{unsafeCharacter.name}</span>
+                <h3 className="text-xl text-block-shadow text-minecraft-ember">Incorrect!</h3>
+                <p className="mt-4 text-sm text-minecraft-cobble">
+                  The unsafe mob was{' '}
+                  <span className="text-minecraft-emerald">{unsafeCharacter.name}</span>.
                 </p>
-                <p className="text-gray-400 italic">{unsafeCharacter.behavior}</p>
+                <p className="mt-3 text-xs text-white">{unsafeCharacter.behavior}</p>
               </motion.div>
             </motion.div>
           )}
