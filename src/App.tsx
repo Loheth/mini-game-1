@@ -4,18 +4,25 @@ import { useGameStore } from './store/gameStore';
 import { StartScreen } from './components/StartScreen';
 import { GameScreen } from './components/GameScreen';
 import { ResultScreen } from './components/ResultScreen';
+import { MuteButton } from './components/MuteButton';
 import { useAudio } from './hooks/useAudio';
 
 function App() {
   const gameState = useGameStore((state) => state.gameState);
-  const { playBgMusic } = useAudio();
+  const isMuted = useGameStore((state) => state.isMuted);
+  const { playBgMusic, stopBgMusic } = useAudio();
 
   useEffect(() => {
-    playBgMusic();
-  }, [playBgMusic]);
+    if (!isMuted) {
+      playBgMusic();
+    } else {
+      stopBgMusic();
+    }
+  }, [playBgMusic, stopBgMusic, isMuted]);
 
   return (
     <div className="min-h-screen">
+      <MuteButton />
       <AnimatePresence mode="wait">
         {gameState === 'start' && <StartScreen key="start" />}
         {gameState === 'playing' && <GameScreen key="playing" />}

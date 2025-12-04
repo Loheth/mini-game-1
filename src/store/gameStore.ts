@@ -11,11 +11,13 @@ interface GameStore {
   selectedCharacter: Character | null;
   isAnswering: boolean;
   showFeedback: boolean;
+  isMuted: boolean;
   
   startGame: () => void;
   selectCharacter: (character: Character) => void;
   nextRound: () => void;
   resetGame: () => void;
+  toggleMute: () => void;
 }
 
 export const useGameStore = create<GameStore>((set, get) => ({
@@ -26,6 +28,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   selectedCharacter: null,
   isAnswering: false,
   showFeedback: false,
+  isMuted: false,
 
   startGame: () => {
     set({
@@ -98,6 +101,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
       isAnswering: false,
       showFeedback: false,
     });
+  },
+
+  toggleMute: () => {
+    set((state) => ({ isMuted: !state.isMuted }));
   },
 }));
 
