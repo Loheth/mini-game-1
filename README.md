@@ -11,6 +11,7 @@ A fast, simple web game built with React + TypeScript + Vite + Tailwind CSS.
 - **Zustand** - Lightweight state management
 - **Framer Motion** - Animation library
 - **canvas-confetti** - Celebration effects
+- **Express** - Backend API server for leaderboard
 
 ## Getting Started
 
@@ -19,15 +20,27 @@ A fast, simple web game built with React + TypeScript + Vite + Tailwind CSS.
 npm install
 ```
 
-2. Start the development server:
-```bash
-npm run dev
-```
+2. Start the development servers:
+   - **Option A**: Run both frontend and backend together:
+   ```bash
+   npm run dev:all
+   ```
+   
+   - **Option B**: Run them separately (in two terminals):
+   ```bash
+   # Terminal 1: Backend API server
+   npm run dev:server
+   
+   # Terminal 2: Frontend dev server
+   npm run dev
+   ```
 
 3. Build for production:
 ```bash
 npm run build
 ```
+
+**Note**: The leaderboard API server runs on `http://localhost:3001` by default. The frontend is configured to proxy API requests to the backend during development.
 
 ## Game Rules
 
@@ -46,4 +59,8 @@ src/
 ├── store/           # Zustand state management
 ├── App.tsx          # Main app component
 └── main.tsx         # Entry point
+server/
+├── index.js          # Express backend server
+└── leaderboard.json  # Leaderboard data storage
+```
 

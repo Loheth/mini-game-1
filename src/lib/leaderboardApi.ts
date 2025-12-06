@@ -3,20 +3,7 @@ export interface LeaderboardEntry {
   score: number;
 }
 
-// Simulate network latency
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-// Mock leaderboard data
-const mockLeaderboard: LeaderboardEntry[] = [
-  { nickname: 'ACE', score: 2500 },
-  { nickname: 'LEO', score: 1800 },
-  { nickname: 'NOVA', score: 1650 },
-  { nickname: 'ZEN', score: 1400 },
-  { nickname: 'RIO', score: 1200 },
-  { nickname: 'MAX', score: 1100 },
-  { nickname: 'LEX', score: 950 },
-  { nickname: 'KAI', score: 800 },
-];
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 /**
  * Submits a score to the leaderboard
@@ -28,14 +15,25 @@ export async function submitScore(
   nickname: string,
   score: number
 ): Promise<boolean> {
-  // Simulate network delay (500-800ms)
-  const delayMs = Math.floor(Math.random() * 300) + 500;
-  await delay(delayMs);
-  
-  // In a real app, this would make an API call
-  // For now, just simulate success
-  console.log(`Score submitted: ${nickname} - ${score}`);
-  return true;
+  try {
+    const response = await fetch(`${API_BASE_URL}/leaderboard`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ nickname, score }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to submit score: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.success === true;
+  } catch (error) {
+    console.error('Error submitting score:', error);
+    throw error;
+  }
 }
 
 /**
@@ -43,11 +41,23 @@ export async function submitScore(
  * @returns Promise that resolves to an array of leaderboard entries
  */
 export async function fetchTopScores(): Promise<LeaderboardEntry[]> {
-  // Simulate network delay (500-800ms)
-  const delayMs = Math.floor(Math.random() * 300) + 500;
-  await delay(delayMs);
-  
-  // Return sorted mock data (highest to lowest)
-  return [...mockLeaderboard].sort((a, b) => b.score - a.score);
+  try {
+    const response = await fetch(`${API_BASE_URL}/leaderboard`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch leaderboard: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    // Ensure we return only nickname and score (remove timestamp if present)
+    return data.map((entry: any) => ({
+      nickname: entry.nickname,
+      score: entry.score,
+    }));
+  } catch (error) {
+    console.error('Error fetching leaderboard:', error);
+    // Return empty array on error so UI doesn't break
+    return [];
+  }
 }
 
